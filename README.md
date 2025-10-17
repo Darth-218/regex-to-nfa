@@ -100,3 +100,10 @@ nfa_representation = {
 **Input**: NFA representation.
 
 **Output**: NFA graph.
+
+### Process
+
+1. Input textfield to enter the regex.
+2. "Visualize" button.
+3. A box to show the output NFA.
+
