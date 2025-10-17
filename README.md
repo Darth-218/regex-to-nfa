@@ -9,7 +9,9 @@
 ## Parsing
 
 **Goal**: Convert an input string regex into a structured blueprint for representation.
+
 **Input**: A valid string regex.
+
 **Output**: Abstract syntax tree.
 
 ### Process
@@ -23,7 +25,9 @@
 ## Constructing
 
 **Goal**: Convert the blueprint into an actual NFA.
+
 **Input**: AST.
+
 **Output**: Data representing NFA (Formal definition).
 
 ### Process
@@ -33,5 +37,7 @@
 ## Visualization
 
 **Goal**: Visualize the NFA
+
 **Input**: NFA representation.
+
 **Output**: NFA graph.
