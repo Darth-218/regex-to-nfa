@@ -1,7 +1,7 @@
 from graphviz import Digraph
 
 class GraphVisualizer:
-    def visualize_nfa_svg(self, nfa):
+    def visualize(self, nfa):
         dot = Digraph()
         dot.attr(rankdir='LR')
         dot.node('', shape='none')
