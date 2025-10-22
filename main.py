@@ -1,4 +1,8 @@
-import parser
+import parser, visualizer
 
 regex = input("Enter regex to parse: ")
-print(parser.Parser().parse(regex))
+
+ast = parser.Parser().parse(regex)
+nfa = constructor.Constructor().construct(ast)
+
+visualizer.GraphVisualizer().visualize(nfa)
