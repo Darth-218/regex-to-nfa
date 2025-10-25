@@ -1,5 +1,12 @@
 # Regex to NFA
 
+### To Install the Requirements and Run the Project
+
+```bash
+pip install -r requirements.txt
+python main.py
+```
+
 ## Project Components
 
 - Parser
@@ -26,9 +33,8 @@
 
 1. Validate the input string.
 2. Tokenize the string.
-3. Add explicit operators.
-4. Apply precedence.
-5. Convert to AST.
+3. Apply precedence.
+4. Convert to AST.
 
 ### Example AST
 
