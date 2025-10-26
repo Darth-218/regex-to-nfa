@@ -1,0 +1,127 @@
+import copy
+
+class StateCounter:
+    def __init__(self):
+        self.count = 0
+
+    def increment(self):
+        s = self.count
+        self.count += 1
+        return s
+
+
+def buildNfa(ast, counter):
+    if not isinstance(ast, dict):
+        ast = {"type": "char", "value": ast}
+    type_ = ast["type"]
+
+    if type_ == "char":
+        start = counter.increment()
+        accept = counter.increment()
+        transitions = {start: {ast["value"]: {accept}}}
+        return start, accept, transitions
+
+    elif type_ == "concat":
+        start1, accept1, transitions1 = buildNfa(ast["left"], counter)
+        start2, accept2, transitions2 = buildNfa(ast["right"], counter)
+
+        transitions1.setdefault(accept1, {}).setdefault("_e", set()).add(start2)
+
+        transitions = copy.deepcopy(transitions1)
+        transitions.update(copy.deepcopy(transitions2))
+
+        return start1, accept2, transitions
+
+    elif type_ == "union":
+        s = counter.increment()
+        a = counter.increment()
+        start1, accept1, transitions1 = buildNfa(ast["left"], counter)
+        start2, accept2, transitions2 = buildNfa(ast["right"], counter)
+
+        transitions = copy.deepcopy(transitions1)
+        transitions.update(copy.deepcopy(transitions2))
+
+        transitions.setdefault(s, {}).setdefault("_e", set()).update({start1, start2})
+        transitions.setdefault(accept1, {}).setdefault("_e", set()).add(a)
+        transitions.setdefault(accept2, {}).setdefault("_e", set()).add(a)
+
+        return s, a, transitions
+
+    elif type_ == "star":
+        s = counter.increment()
+        a = counter.increment()
+        start1, accept1, transitions1 = buildNfa(ast["left"], counter)
+        transitions = copy.deepcopy(transitions1)
+
+        transitions.setdefault(s, {}).setdefault("_e", set()).update({start1, a})
+        transitions.setdefault(accept1, {}).setdefault("_e", set()).update({start1, a})
+
+        return s, a, transitions
+
+
+def construct_nfa(ast):
+    counter = StateCounter()
+    start, accept, transitions = buildNfa(ast, counter)
+    nfa = {
+        "states": set(range(counter.count)),
+        "start_state": start,
+        "accept_states": {accept},
+        "transitions": transitions,
+    }
+    return nfa
+
+
+def main():
+
+# (a|b)*abb:
+#     ast_representation = {
+#     "type": "concat",
+#     "left": {
+#         "type": "star",
+#         "left": {
+#             "type": "union",
+#             "left": "a",
+#             "right": "b"
+#         },
+#         "right": 0,
+#     },
+#     "right": {
+#         "type": "concat",
+#         "left": "a",
+#         "right": {
+#             "type": "concat",
+#             "left": "b",
+#             "right": "b"
+#         }
+#     }
+# }
+
+# Regex: ab
+#     ast_representation = {
+#     "type": "concat",
+#     "left": {"type": "char", "value": "a"},
+#     "right": {"type": "char", "value": "b"}
+# }
+
+
+# Regex: (ab)*|c
+    ast_representation = {
+    "type": "union",
+    "left": {
+        "type": "star",
+        "left": {
+            "type": "concat",
+            "left": {"type": "char", "value": "a"},
+            "right": {"type": "char", "value": "b"}
+        }
+    },
+    "right": {"type": "char", "value": "c"}
+}
+
+    
+    nfa = construct_nfa(ast_representation)
+    print(nfa)
+
+
+if __name__ == "__main__":
+    main()
