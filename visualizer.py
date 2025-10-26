@@ -17,4 +17,5 @@ class GraphVisualizer:
                     label = 'ε' if symbol == '_e' else symbol
                     dot.edge(str(src), str(dest), label=label)
 
+        dot.render("nfa", format="png")
         return dot.pipe(format='svg').decode('utf-8')
