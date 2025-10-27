@@ -9,66 +9,70 @@ class StateCounter:
         self.count += 1
         return s
 
-
-def buildNfa(ast, counter):
-    if not isinstance(ast, dict):
-        ast = {"type": "char", "value": ast}
-    type_ = ast["type"]
-
-    if type_ == "char":
-        start = counter.increment()
-        accept = counter.increment()
-        transitions = {start: {ast["value"]: {accept}}}
-        return start, accept, transitions
-
-    elif type_ == "concat":
-        start1, accept1, transitions1 = buildNfa(ast["left"], counter)
-        start2, accept2, transitions2 = buildNfa(ast["right"], counter)
-
-        transitions1.setdefault(accept1, {}).setdefault("_e", set()).add(start2)
-
-        transitions = copy.deepcopy(transitions1)
-        transitions.update(copy.deepcopy(transitions2))
-
-        return start1, accept2, transitions
-
-    elif type_ == "union":
-        s = counter.increment()
-        a = counter.increment()
-        start1, accept1, transitions1 = buildNfa(ast["left"], counter)
-        start2, accept2, transitions2 = buildNfa(ast["right"], counter)
-
-        transitions = copy.deepcopy(transitions1)
-        transitions.update(copy.deepcopy(transitions2))
-
-        transitions.setdefault(s, {}).setdefault("_e", set()).update({start1, start2})
-        transitions.setdefault(accept1, {}).setdefault("_e", set()).add(a)
-        transitions.setdefault(accept2, {}).setdefault("_e", set()).add(a)
-
-        return s, a, transitions
-
-    elif type_ == "star":
-        s = counter.increment()
-        a = counter.increment()
-        start1, accept1, transitions1 = buildNfa(ast["left"], counter)
-        transitions = copy.deepcopy(transitions1)
-
-        transitions.setdefault(s, {}).setdefault("_e", set()).update({start1, a})
-        transitions.setdefault(accept1, {}).setdefault("_e", set()).update({start1, a})
-
-        return s, a, transitions
+class NFAConstructor:
+    def __init__(self, ast):
+        self.ast = ast
+        self.counter = StateCounter()
 
 
-def construct_nfa(ast):
-    counter = StateCounter()
-    start, accept, transitions = buildNfa(ast, counter)
-    nfa = {
-        "states": set(range(counter.count)),
-        "start_state": start,
-        "accept_states": {accept},
-        "transitions": transitions,
-    }
-    return nfa
+    def buildNfa(self, ast):
+        if not isinstance(ast, dict):
+            ast = {"type": "char", "value": ast}
+        type_ = ast["type"]
+
+        if type_ == "char":
+            start = self.counter.increment()
+            accept = self.counter.increment()
+            transitions = {start: {ast["value"]: {accept}}}
+            return start, accept, transitions
+
+        elif type_ == "concat":
+            start1, accept1, transitions1 = self.buildNfa(ast["left"])
+            start2, accept2, transitions2 = self.buildNfa(ast["right"])
+
+            transitions1.setdefault(accept1, {}).setdefault("_e", set()).add(start2)
+
+            transitions = copy.deepcopy(transitions1)
+            transitions.update(copy.deepcopy(transitions2))
+
+            return start1, accept2, transitions
+
+        elif type_ == "union":
+            s = self.counter.increment()
+            a = self.counter.increment()
+            start1, accept1, transitions1 = self.buildNfa(ast["left"])
+            start2, accept2, transitions2 = self.buildNfa(ast["right"])
+
+            transitions = copy.deepcopy(transitions1)
+            transitions.update(copy.deepcopy(transitions2))
+
+            transitions.setdefault(s, {}).setdefault("_e", set()).update({start1, start2})
+            transitions.setdefault(accept1, {}).setdefault("_e", set()).add(a)
+            transitions.setdefault(accept2, {}).setdefault("_e", set()).add(a)
+
+            return s, a, transitions
+
+        elif type_ == "star":
+            s = self.counter.increment()
+            a = self.counter.increment()
+            start1, accept1, transitions1 = self.buildNfa(ast["left"])
+            transitions = copy.deepcopy(transitions1)
+
+            transitions.setdefault(s, {}).setdefault("_e", set()).update({start1, a})
+            transitions.setdefault(accept1, {}).setdefault("_e", set()).update({start1, a})
+
+            return s, a, transitions
+
+
+    def construct_nfa(self):
+        start, accept, transitions = self.buildNfa(self.ast)
+        nfa = {
+            "states": set(range(self.counter.count)),
+            "start_state": start,
+            "accept_states": {accept},
+            "transitions": transitions,
+        }
+        return nfa
 
 
 def main():
@@ -119,7 +123,8 @@ def main():
 }
 
     
-    nfa = construct_nfa(ast_representation)
+    nfa_builder = NFAConstructor(ast_representation)
+    nfa = nfa_builder.construct_nfa()
     print(nfa)
 
 
