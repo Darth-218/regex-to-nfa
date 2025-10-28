@@ -4,7 +4,7 @@
 
 ```bash
 pip install -r requirements.txt
-python main.py
+streamlit run main.py
 ```
 
 ## Project Components
