@@ -9,7 +9,7 @@ class StateCounter:
         self.count += 1
         return s
 
-class NFAConstructor:
+class Constructor:
     def __init__(self, ast):
         self.ast = ast
         self.counter = StateCounter()

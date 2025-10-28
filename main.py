@@ -59,7 +59,7 @@ def process():
         st.error(e)
         return
 
-    nfa = constructor.construct_nfa(ast)
+    nfa = constructor.Constructor(ast).construct_nfa()
 
     nfa_info = get_nfa_info(nfa)
     ast_info = get_ast_info(ast)
