@@ -29,7 +29,7 @@ def get_nfa_info(nfa):
 def get_ast_info(node, parent=None, level=0, rows=None):
     if rows is None:
         rows = []
-    if isinstance(node, str):  # leaf symbol
+    if isinstance(node, str):
         rows.append({
             "Node Type": "symbol",
             "Parent": parent,
