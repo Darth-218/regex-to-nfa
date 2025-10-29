@@ -10,8 +10,8 @@ class StateCounter:
         return s
 
 class Constructor:
-    def __init__(self, ast):
-        self.ast = ast
+    def __init__(self):
+        self.ast = None
         self.counter = StateCounter()
 
 
@@ -64,7 +64,7 @@ class Constructor:
             return s, a, transitions
 
 
-    def construct_nfa(self):
+    def construct_nfa(self, ast):
         start, accept, transitions = self.buildNfa(self.ast)
         nfa = {
             "states": set(range(self.counter.count)),

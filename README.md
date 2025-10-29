@@ -4,7 +4,9 @@
 
 ```bash
 pip install -r requirements.txt
-streamlit run main.py
+
+streamlit run main.py   # For the GUI
+python cli.py   # For the CLI
 ```
 
 ## Project Components
