@@ -65,6 +65,7 @@ class Constructor:
 
 
     def construct_nfa(self, ast):
+        self.ast = ast
         start, accept, transitions = self.buildNfa(self.ast)
         nfa = {
             "states": set(range(self.counter.count)),
