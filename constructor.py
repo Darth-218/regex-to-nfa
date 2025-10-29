@@ -62,6 +62,28 @@ class Constructor:
             transitions.setdefault(accept1, {}).setdefault("_e", set()).update({start1, a})
 
             return s, a, transitions
+        
+        elif type_ == "plus":
+            s = self.counter.increment()
+            a = self.counter.increment()
+            start1, accept1, transitions1 = self.buildNfa(ast["left"])
+
+            transitions = copy.deepcopy(transitions1)
+            transitions.setdefault(s, {}).setdefault("_e", set()).add(start1)
+            transitions.setdefault(accept1, {}).setdefault("_e", set()).update({start1, a})
+
+            return s, a, transitions
+        
+        elif type_ == "optional":
+            s = self.counter.increment()
+            a = self.counter.increment()
+            start1, accept1, transitions1 = self.buildNfa(ast["left"])
+
+            transitions = copy.deepcopy(transitions1)
+            transitions.setdefault(s, {}).setdefault("_e", set()).update({start1, a})
+            transitions.setdefault(accept1, {}).setdefault("_e", set()).add(a)
+
+            return s, a, transitions
 
 
     def construct_nfa(self, ast):
@@ -110,22 +132,35 @@ def main():
 
 
 # Regex: (ab)*|c
+#     ast_representation = {
+#     "type": "union",
+#     "left": {
+#         "type": "star",
+#         "left": {
+#             "type": "concat",
+#             "left": {"type": "char", "value": "a"},
+#             "right": {"type": "char", "value": "b"}
+#         }
+#     },
+#     "right": {"type": "char", "value": "c"}
+# }
+
     ast_representation = {
-    "type": "union",
-    "left": {
-        "type": "star",
-        "left": {
-            "type": "concat",
-            "left": {"type": "char", "value": "a"},
-            "right": {"type": "char", "value": "b"}
+            "type": "union",
+            "left": {
+                "type": "plus",
+                "left": {
+                    "type": "concat",
+                    "left": {"type": "char", "value": "a"},
+                    "right": {"type": "char", "value": "b"},
+                },
+            },
+            "right": {"type": "char", "value": "c"},
         }
-    },
-    "right": {"type": "char", "value": "c"}
-}
 
     
-    nfa_builder = NFAConstructor(ast_representation)
-    nfa = nfa_builder.construct_nfa()
+    nfa_builder = Constructor()
+    nfa = nfa_builder.construct_nfa(ast_representation)
     print(nfa)
 
 
