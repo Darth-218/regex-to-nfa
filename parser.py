@@ -22,6 +22,8 @@ class Parser:
         return self.tokens[self.pos].type if self.pos < len(self.tokens) else None
 
     def consume(self, expected=None):
+        if self.pos >= len(self.tokens):
+            raise SyntaxError("Unexpected end of input. Are you missing a bracket?")
         token = self.tokens[self.pos]
         if expected and token.type != expected:
             raise SyntaxError(f"Expected {expected}, got {token.type} instead.")
@@ -30,7 +32,10 @@ class Parser:
 
     def parse(self, string):
         self.tokens = self.tokenize(string)
-        return self.parse_expression()
+        ast = self.parse_expression()
+        if self.pos != len(self.tokens):
+            raise SyntaxError(f"Unexpected token {self.lookahead()}")
+        return ast
 
     def parse_base(self):
         token = self.lookahead()
