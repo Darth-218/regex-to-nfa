@@ -31,12 +31,17 @@ python cli.py   # For the CLI
 
 **Output**: Abstract syntax tree.
 
-### Process
+### Parser Grammar
 
-1. Validate the input string.
-2. Tokenize the string.
-3. Apply precedence.
-4. Convert to AST.
+$$
+\begin{aligned}
+\text{Expression} &\;\rightarrow\; \text{Term} + \text{Term} \;\mid\; \text{Term} \\[6pt]
+\text{Term} &\;\rightarrow\; \text{Factor} \cdot \text{Character} \;\mid\; \text{Factor} \\[6pt]
+\text{Factor} &\;\rightarrow\; \text{Base} \;\mid\; \text{Operation}  \\[6pt]
+\text{Base} &\;\rightarrow\; (\text{Expression}) \;\mid\; \text{Character} \\[6pt]
+\text{Operation} &\;\rightarrow\; * \;\mid\; ? \;\mid\; +
+\end{aligned}
+$$
 
 ### Example AST
 
