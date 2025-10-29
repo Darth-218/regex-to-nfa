@@ -1,5 +1,11 @@
 from graphviz import Digraph
-from itertools import count
+
+class Counter:
+    def __init__(self) -> None:
+        self.current = 0
+    def next(self):
+        self.current += 1
+        return self.current + 1
 
 class Visualizer:
 	def visualize_nfa(self, nfa):
@@ -26,10 +32,10 @@ class Visualizer:
 		dot = Digraph()
 		dot.attr(rankdir='TB')
 
-		node_counter = count()
+		node_counter = Counter()
 
 		def add_node(node, parent_id=None, edge_label=None):
-			node_id = f'n{next(node_counter)}'
+			node_id = f'n{node_counter.next()}'
 
 			if isinstance(node, dict):
 				label = node.get('type', 'node')
