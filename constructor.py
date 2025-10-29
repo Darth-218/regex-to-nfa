@@ -53,6 +53,7 @@ class Constructor:
             return s, a, transitions
 
         elif type_ == "star":
+            left_ast = ast["left"] 
             s = self.counter.increment()
             a = self.counter.increment()
             start1, accept1, transitions1 = self.buildNfa(ast["left"])
@@ -64,6 +65,7 @@ class Constructor:
             return s, a, transitions
         
         elif type_ == "plus":
+            left_ast = ast["left"] 
             s = self.counter.increment()
             a = self.counter.increment()
             start1, accept1, transitions1 = self.buildNfa(ast["left"])
@@ -74,7 +76,8 @@ class Constructor:
 
             return s, a, transitions
         
-        elif type_ == "optional":
+        elif type_ == "question":
+            left_ast = ast["left"] 
             s = self.counter.increment()
             a = self.counter.increment()
             start1, accept1, transitions1 = self.buildNfa(ast["left"])
@@ -145,18 +148,12 @@ def main():
 #     "right": {"type": "char", "value": "c"}
 # }
 
-    ast_representation = {
-            "type": "union",
-            "left": {
-                "type": "plus",
-                "left": {
-                    "type": "concat",
-                    "left": {"type": "char", "value": "a"},
-                    "right": {"type": "char", "value": "b"},
-                },
-            },
-            "right": {"type": "char", "value": "c"},
-        }
+    ast_representation = ast_representation = {
+    "type": "question",
+    "left": {"type": "concat", "left": "a", "right": "b"},
+    "right": 0
+}
+
 
     
     nfa_builder = Constructor()
