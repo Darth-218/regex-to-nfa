@@ -3,7 +3,7 @@ import streamlit as st
 
 st.header("Regex to NFA Converter")
 
-regex = st.text_input("Enter Regex")
+regex = st.text_input("Enter Regex", placeholder="Example Regex: (ab)*b+a")
 st.caption("Valid operators: `|`, `*`, `+`, `?`")
 clicked = st.button("Convert")
 
@@ -71,7 +71,7 @@ def process():
 
     st.subheader(f"For the Regex `{regex}`:")
 
-    nfa_tab, ast_tab, all_tab = st.tabs(["NFA", "AST", "All"])
+    all_tab, nfa_tab, ast_tab = st.tabs(["All", "NFA", "AST"])
 
     with nfa_tab:
         st.image(nfa_visualized, width='stretch')
