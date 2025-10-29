@@ -1,5 +1,8 @@
 [theme]
 base="dark"
 primaryColor="#54ff4b"
+dataframeBorderColor="#181818"
 backgroundColor="#000000"
-
+secondaryBackgroundColor="#181818"
+codeBackgroundColor="#181818"
+dataframeHeaderBackgroundColor="#181818"
