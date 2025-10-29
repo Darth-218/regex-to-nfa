@@ -6,5 +6,5 @@ while True:
     ast = parser.Parser().parse(regex)
     nfa = constructor.Constructor().construct_nfa(ast)
 
-    visualizer.GraphVisualizer().visualize_nfa(nfa)
-    visualizer.GraphVisualizer().visualize_ast(ast)
+    visualizer.Visualizer().visualize_nfa(nfa)
+    visualizer.Visualizer().visualize_ast(ast)

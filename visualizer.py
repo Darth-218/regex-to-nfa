@@ -1,7 +1,7 @@
 from graphviz import Digraph
 from itertools import count
 
-class GraphVisualizer:
+class Visualizer:
 	def visualize_nfa(self, nfa):
 		dot = Digraph()
 		dot.attr(rankdir='LR')

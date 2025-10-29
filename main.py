@@ -66,8 +66,8 @@ def process():
     ast_info = get_ast_info(ast)
 
 
-    nfa_visualized = visualizer.GraphVisualizer().visualize_nfa(nfa)
-    ast_visualized = visualizer.GraphVisualizer().visualize_ast(ast)
+    nfa_visualized = visualizer.Visualizer().visualize_nfa(nfa)
+    ast_visualized = visualizer.Visualizer().visualize_ast(ast)
 
     st.subheader(f"For the Regex `{regex}`:")
 
