@@ -73,27 +73,27 @@ def process():
     nfa_tab, ast_tab, all_tab = st.tabs(["NFA", "AST", "All"])
 
     with nfa_tab:
-        st.image(nfa_visualized, use_container_width=True)
+        st.image(nfa_visualized, width='stretch')
         st.dataframe(nfa_info[0], hide_index=True)
         st.dataframe(nfa_info[1], hide_index=True)
 
     with ast_tab:
         _, col, _ = st.columns([1, 2, 1])
         with col:
-            st.image(ast_visualized, use_container_width=True)
+            st.image(ast_visualized, width='stretch')
         st.dataframe(ast_info, hide_index=True)
 
     with all_tab:
 
         st.markdown(f"### The NFA")
-        st.image(nfa_visualized, use_container_width=True)
+        st.image(nfa_visualized, width='stretch')
         st.dataframe(nfa_info[0], hide_index=True)
         st.dataframe(nfa_info[1], hide_index=True)
 
         st.markdown(f"#### The AST")
         _, col, _ = st.columns([1, 2, 1])
         with col:
-            st.image(ast_visualized, use_container_width=True)
+            st.image(ast_visualized, width='stretch')
         st.dataframe(ast_info, hide_index=True)
     return
 
