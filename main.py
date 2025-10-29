@@ -4,6 +4,7 @@ import streamlit as st
 st.header("Regex to NFA Converter")
 
 regex = st.text_input("Enter Regex")
+st.caption("Valid operators: `|`, `*`, `+`, `?`")
 clicked = st.button("Convert")
 
 def get_nfa_info(nfa):
