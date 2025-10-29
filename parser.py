@@ -53,7 +53,7 @@ class Parser:
         base = self.parse_base()
         while self.lookahead() in {'*', '+', '?'}:
             operation = self.consume().type
-            base = {"type": {"*": "star", "+": "plus", "?": "question"}[operation],
+            base = {"type": {"*": "star", "+": "plus", "?": "optional"}[operation],
                     "left": base, "right": 0}
         return base
 

@@ -76,7 +76,7 @@ class Constructor:
 
             return s, a, transitions
         
-        elif type_ == "question":
+        elif type_ == "optional":
             left_ast = ast["left"] 
             s = self.counter.increment()
             a = self.counter.increment()
