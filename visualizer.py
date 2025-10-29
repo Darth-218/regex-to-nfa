@@ -42,13 +42,13 @@ class GraphVisualizer:
 
 			if parent_id is not None:
 				if edge_label is not None:
-					dot.edge(parent_id, node_id, label=str(edge_label))
+					dot.edge(parent_id, node_id)
 				else:
 					dot.edge(parent_id, node_id)
 
 			if isinstance(node, dict):
 				for key, value in node.items():
-					if key == 'type' or value is None:
+					if key == 'type' or value is None or value == 0:
 						continue
 					add_child(value, node_id, key)
 			elif isinstance(node, (list, tuple, set)):
