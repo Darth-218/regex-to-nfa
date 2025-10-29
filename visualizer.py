@@ -62,30 +62,3 @@ class Visualizer:
 
 		dot.render("ast", format="svg")
 		return dot.pipe(format='svg').decode('utf-8')
-
-
-
-#  Example usage
-if __name__ == "__main__":
-	nfa = {
-		"states": {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
-		"start_state": 0,
-		"accept_states": {11},
-		"transitions": {
-			0: {"_e": {1, 7}},
-			1: {"a": {2}},
-			2: {"_e": {6}},
-			7: {"b": {8}},
-			8: {"_e": {6}},
-			6: {"_e": {0, 9}},
-			9: {"a": {10}},
-			10: {"b": {11}},
-			11: {"b": {12}}
-		}
-	}
-
-	gv = GraphVisualizer()
-	svg = gv.visualize_nfa(nfa)
-	with open("nfa.svg", "w", encoding="utf-8") as f:
-		f.write(svg)
-	print("Wrote nfa.svg")
