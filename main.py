@@ -7,7 +7,7 @@ regex = st.text_input("Enter Regex", placeholder="Example Regex: (ab)*b+a")
 st.caption("Valid operators: `|`, `*`, `+`, `?`")
 clicked = st.button("Convert")
 
-def get_nfa_info(nfa):
+def get_nfa_info(nfa) -> tuple[list[dict[str, str]], list[str]]:
     transition_rows = []
     for state, transitions in sorted(nfa["transitions"].items()):
         for symbol, targets in transitions.items():
@@ -26,7 +26,7 @@ def get_nfa_info(nfa):
     return states, transition_rows
 
 
-def get_ast_info(node, parent=None, level=0, rows=None):
+def get_ast_info(node, parent=None, level=0, rows=None) -> list[dict[str, str]]:
     if rows is None:
         rows = []
     if isinstance(node, str):
@@ -53,7 +53,7 @@ def get_ast_info(node, parent=None, level=0, rows=None):
         get_ast_info(node["right"], parent=node["type"], level=level+1, rows=rows)
     return rows
 
-def process():
+def process() -> None:
     try:
         ast = parser.Parser().parse(regex)
     except SyntaxError as e:

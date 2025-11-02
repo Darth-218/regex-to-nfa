@@ -3,12 +3,13 @@ from graphviz import Digraph
 class Counter:
     def __init__(self) -> None:
         self.current = 0
-    def next(self):
+
+    def next(self) -> int:
         self.current += 1
         return self.current + 1
 
 class Visualizer:
-	def visualize_nfa(self, nfa):
+	def visualize_nfa(self, nfa) -> str:
 		dot = Digraph()
 		dot.attr(rankdir='LR')
 
@@ -25,10 +26,10 @@ class Visualizer:
 					label = 'ε' if symbol == '_e' else symbol
 					dot.edge(str(src), str(dest), label=label)
 
-		dot.render("nfa", format="svg")
+		dot.render("output/nfa", format="svg")
 		return dot.pipe(format='svg').decode('utf-8')
 
-	def visualize_ast(self, ast):
+	def visualize_ast(self, ast) -> str:
 		dot = Digraph()
 		dot.attr(rankdir='TB')
 
@@ -66,5 +67,5 @@ class Visualizer:
 
 		add_node(ast)
 
-		dot.render("ast", format="svg")
+		dot.render("output/ast", format="svg")
 		return dot.pipe(format='svg').decode('utf-8')

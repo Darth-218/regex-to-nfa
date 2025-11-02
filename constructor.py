@@ -1,16 +1,16 @@
 import copy
 
 class StateCounter:
-    def __init__(self):
+    def __init__(self) -> None:
         self.count = 0
 
-    def increment(self):
+    def increment(self) -> int:
         s = self.count
         self.count += 1
         return s
 
 class Constructor:
-    def __init__(self):
+    def __init__(self) -> None:
         self.ast = None
         self.counter = StateCounter()
 
@@ -89,7 +89,7 @@ class Constructor:
             return s, a, transitions
 
 
-    def construct_nfa(self, ast):
+    def construct_nfa(self, ast) -> dict[str, str]:
         self.ast = ast
         start, accept, transitions = self.buildNfa(self.ast)
         nfa = {

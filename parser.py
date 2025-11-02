@@ -21,7 +21,7 @@ class Parser:
     def lookahead(self) -> str | None:
         return self.tokens[self.pos].type if self.pos < len(self.tokens) else None
 
-    def consume(self, expected=None):
+    def consume(self, expected=None) -> Token:
         if self.pos >= len(self.tokens):
             raise SyntaxError("Unexpected end of input. Are you missing a bracket?")
         token = self.tokens[self.pos]
@@ -30,14 +30,14 @@ class Parser:
         self.pos += 1
         return token
 
-    def parse(self, string):
+    def parse(self, string) -> str | dict[str, str]:
         self.tokens = self.tokenize(string)
         ast = self.parse_expression()
         if self.pos != len(self.tokens):
             raise SyntaxError(f"Unexpected token {self.lookahead()}")
         return ast
 
-    def parse_base(self):
+    def parse_base(self) -> str | dict[str, str]:
         token = self.lookahead()
         if token == "CHAR":
             return self.consume().value
@@ -49,7 +49,7 @@ class Parser:
         else:
             raise SyntaxError(f"Unexpected token {token}")
 
-    def parse_factor(self):
+    def parse_factor(self) -> str | dict[str, str]:
         base = self.parse_base()
         while self.lookahead() in {'*', '+', '?'}:
             operation = self.consume().type
@@ -57,14 +57,14 @@ class Parser:
                     "left": base, "right": 0}
         return base
 
-    def parse_term(self):
+    def parse_term(self) -> str | dict[str, str]:
         left = self.parse_factor()
         while self.lookahead() in {"CHAR", '('}:
             right = self.parse_factor()
             left = {"type": "concat", "left": left, "right": right}
         return left
 
-    def parse_expression(self):
+    def parse_expression(self) -> str | dict[str, str]:
         left = self.parse_term()
         while self.lookahead() == '|':
             self.consume('|')

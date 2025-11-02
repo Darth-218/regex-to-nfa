@@ -8,3 +8,5 @@ while True:
 
     visualizer.Visualizer().visualize_nfa(nfa)
     visualizer.Visualizer().visualize_ast(ast)
+
+    print("Successfully parsed and saved the NFA!")
