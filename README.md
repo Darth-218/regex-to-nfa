@@ -35,10 +35,10 @@ python cli.py   # For the CLI
 
 $$
 \begin{aligned}
-\text{Expression} &\;\rightarrow\; \text{Term} + \text{Term} \;\mid\; \text{Term} \\[6pt]
-\text{Term} &\;\rightarrow\; \text{Factor} \cdot \text{Character} \;\mid\; \text{Factor} \\[6pt]
-\text{Factor} &\;\rightarrow\; \text{Base} \;\mid\; \text{Operation}  \\[6pt]
-\text{Base} &\;\rightarrow\; (\text{Expression}) \;\mid\; \text{Character} \\[6pt]
+\text{Expression} &\;\rightarrow\; \text{Term} + \text{Term} \;\mid\; \text{Term} \\\
+\text{Term} &\;\rightarrow\; \text{Factor} \cdot \text{Character} \;\mid\; \text{Factor} \\\
+\text{Factor} &\;\rightarrow\; \text{Base} \;\mid\; \text{Operation}  \\\
+\text{Base} &\;\rightarrow\; (\text{Expression}) \;\mid\; \text{Character} \\\
 \text{Operation} &\;\rightarrow\; * \;\mid\; ? \;\mid\; +
 \end{aligned}
 $$
