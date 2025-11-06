@@ -16,7 +16,7 @@
 \setstretch{1.2}
 
 \title{\textbf{Regex to NFA}}
-\author{Darth-218}
+\author{Yahia Gaber, 231000412 \and Omar Desouky, 231000256 \and Ahmed Abdelmaboud, 231000224}
 \date{}
 
 \lstset{
@@ -31,8 +31,6 @@
 \maketitle
 
 \section*{Installation and Running}
-
-To install the required dependencies and run the project:
 
 \begin{lstlisting}[language=bash]
 pip install -r requirements.txt
@@ -49,7 +47,7 @@ python cli.py           # For the CLI
     \item NFA Visualizer
 \end{itemize}
 
-\section*{Valid Regex Operators}
+\section*{Valid/Accepted Regex Operators}
 
 \begin{itemize}
     \item \texttt{.}: Concatenation (concat)
@@ -58,6 +56,8 @@ python cli.py           # For the CLI
     \item \texttt{+}: Kleene plus (plus)
     \item \texttt{?}: Optional (optional)
 \end{itemize}
+
+\pagebreak
 
 \section*{Parsing}
 
@@ -74,7 +74,7 @@ python cli.py           # For the CLI
 \text{Term} &\rightarrow \text{Factor} \cdot \text{Character} \mid \text{Factor} \\
 \text{Factor} &\rightarrow \text{Base} \mid \text{Operation} \\
 \text{Base} &\rightarrow (\text{Expression}) \mid \text{Character} \\
-\text{Operation} &\rightarrow * \mid ? \mid +
+\text{Operation} &\rightarrow * \mid \ ? \mid +
 \end{aligned}
 \]
 
@@ -105,6 +105,8 @@ ast_representation = {
     }
 }
 \end{lstlisting}
+
+\pagebreak
 
 \section*{Constructing}
 
@@ -139,6 +141,8 @@ nfa_representation = {
 }
 \end{lstlisting}
 
+\pagebreak
+
 \section*{Visualization}
 
 \textbf{Goal:} Visualize the NFA.\\
@@ -158,7 +162,7 @@ nfa_representation = {
 For the regex \texttt{(a|b)*abb}:
 
 \begin{center}
-    \includegraphics[width=0.7\textwidth]{example.svg}
+    \includegraphics[width=0.7\textwidth]{example.png}
 \end{center}
 
 \end{document}

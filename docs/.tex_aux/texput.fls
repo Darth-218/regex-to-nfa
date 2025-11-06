@@ -1,0 +1,4 @@
+PWD /home/darth/the-duat/Notes/01_college/CSCI-419/01_project/docs
+INPUT /usr/share/texmf-dist/web2c/texmf.cnf
+INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
+OUTPUT .tex_aux/texput.log
